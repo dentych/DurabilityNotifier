@@ -35,8 +35,9 @@ public class Main extends JavaPlugin implements Listener {
         if (maxDur > 0) {
             String itemname = p.getItemInHand().getType().toString();
 
-            p.sendMessage("Durability of " + itemname + ": " + durLeft);
-            p.sendMessage("Max dur of " + itemname + ": " + maxDur);
+            // Debugging messages. Disabled for production.
+            // p.sendMessage("Durability of " + itemname + ": " + durLeft);
+            // p.sendMessage("Max dur of " + itemname + ": " + maxDur);
             if (p.getItemInHand().getType() != Material.AIR && durLeft < durWarning) {
                 p.sendMessage(ChatColor.RED + "WARNING: " + ChatColor.GREEN + "Your " + itemname + " needs repairing soon!");
             }
