@@ -7,8 +7,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-/**
- * Created by Dennis on 01/04/14.
+/*
+ * ----------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * <dentych@github> wrote this file. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return Dennis T
+ * ----------------------------------------------------------------------------
  */
 public class Main extends JavaPlugin implements Listener {
     @Override
