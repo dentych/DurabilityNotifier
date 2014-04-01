@@ -1,6 +1,7 @@
 package dk.dennist.durnotifier;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,9 +27,14 @@ public class Main extends JavaPlugin implements Listener {
     void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
 
-        short dur = p.getItemInHand().getDurability();
+        int dur = p.getItemInHand().getDurability();
+        int maxDur = p.getItemInHand().getType().getMaxDurability();
+        int durLeft = maxDur - dur;
 
-        if (dur < 10) {
+        String itemname = p.getItemInHand().toString();
+
+        p.sendMessage("Durability of " + itemname + ": " + dur);
+        if (p.getItemInHand().getType() != Material.AIR && durLeft < 25) {
             p.sendMessage(ChatColor.RED + "WARNING: " + ChatColor.GREEN + "Your tool needs repairing soon!");
         }
     }
