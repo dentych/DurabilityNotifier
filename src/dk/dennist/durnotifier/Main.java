@@ -27,15 +27,19 @@ public class Main extends JavaPlugin implements Listener {
     void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
 
+        short durWarning = 10;
         int dur = p.getItemInHand().getDurability();
         int maxDur = p.getItemInHand().getType().getMaxDurability();
         int durLeft = maxDur - dur;
 
-        String itemname = p.getItemInHand().toString();
+        if (maxDur > 0) {
+            String itemname = p.getItemInHand().getType().toString();
 
-        p.sendMessage("Durability of " + itemname + ": " + dur);
-        if (p.getItemInHand().getType() != Material.AIR && durLeft < 25) {
-            p.sendMessage(ChatColor.RED + "WARNING: " + ChatColor.GREEN + "Your tool needs repairing soon!");
-        }
+            p.sendMessage("Durability of " + itemname + ": " + durLeft);
+            p.sendMessage("Max dur of " + itemname + ": " + maxDur);
+            if (p.getItemInHand().getType() != Material.AIR && durLeft < durWarning) {
+                p.sendMessage(ChatColor.RED + "WARNING: " + ChatColor.GREEN + "Your " + itemname + " needs repairing soon!");
+            }
+        } // else, item is not a tool.
     }
 }
