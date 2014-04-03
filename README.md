@@ -11,6 +11,11 @@ Features
   * Or if tool is used to hit a mob/player
 * Command to check the current durability of item in hand (/dn dur)
 
+How to use
+-------------
+When items are about to break (less than 10 uses left) the plugin will warn you in chat.<br>
+You can check the current durability of the item in your hand by executing /dn dur, while (of course) holding the item you want to check the durability for.
+
 Planned features
 -----------
 * Warns about armour almost broken (PLANNED FEATURE)
