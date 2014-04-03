@@ -9,5 +9,13 @@ Features
 * Warns about almost broken tools
   * Checks when tool is being used
   * Or if tool is used to hit a mob/player
+* Command to check the current durability of item in hand (/dn dur)
+
+Planned features
+-----------
 * Warns about armour almost broken (PLANNED FEATURE)
-* Commands for checking the durability of tools/armour (PLANNED FEATURE)
+* Commands for checking the durability of armour (PLANNED FEATURE)
+
+To do
+--------
+* Make better looking item names (eg. Wooden spade instead of WOOD_SPADE)
