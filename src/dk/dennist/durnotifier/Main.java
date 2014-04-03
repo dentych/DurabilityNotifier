@@ -27,21 +27,23 @@ public class Main extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("dn")) {
-            if ((sender instanceof Player) && sender.isOp()) {
+            if ((sender instanceof Player)) {
                 Player p = (Player) sender;
                 if (args.length == 2 && args[0].equalsIgnoreCase("use")) {
-                    short dur = p.getItemInHand().getDurability();
-                    short maxDur = p.getItemInHand().getType().getMaxDurability();
-                    if (maxDur > 0) {
-                        try {
-                            short durUse = Short.parseShort(args[1]);
-                            short newDur = (short)(dur + durUse);
-                            if (newDur < maxDur) {
-                                p.getItemInHand().setDurability(newDur);
-                                return true;
+                    if (p.isOp()) {
+                        short dur = p.getItemInHand().getDurability();
+                        short maxDur = p.getItemInHand().getType().getMaxDurability();
+                        if (maxDur > 0) {
+                            try {
+                                short durUse = Short.parseShort(args[1]);
+                                short newDur = (short) (dur + durUse);
+                                if (newDur < maxDur) {
+                                    p.getItemInHand().setDurability(newDur);
+                                    return true;
+                                }
+                            } catch (NumberFormatException e) {
+                                return false;
                             }
-                        } catch (NumberFormatException e) {
-                            return false;
                         }
                     }
                 }
@@ -54,7 +56,7 @@ public class Main extends JavaPlugin {
                 }
             }
             else // if sender != player || sender != opped.
-                sender.sendMessage(ChatColor.RED + "This command can only be used by opped players in-game.");
+                sender.sendMessage(ChatColor.RED + "This command can only be used by in-game players.");
         }
         return false;
     }
