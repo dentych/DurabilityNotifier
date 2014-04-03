@@ -1,11 +1,9 @@
 package dk.dennist.durnotifier;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /*
@@ -16,31 +14,48 @@ import org.bukkit.plugin.java.JavaPlugin;
  * this stuff is worth it, you can buy me a beer in return Dennis T
  * ----------------------------------------------------------------------------
  */
-public class Main extends JavaPlugin implements Listener {
+public class Main extends JavaPlugin {
+
     @Override
     public void onEnable() {
         // EventListener
-        getServer().getPluginManager().registerEvents(this, this);
+        EvtListen evtListen = new EvtListen();
+        evtListen.durWarning = 10;
+        getServer().getPluginManager().registerEvents(evtListen, this);
     }
 
-    @EventHandler
-    void onBlockBreak(BlockBreakEvent e) {
-        Player p = e.getPlayer();
-
-        short durWarning = 10;
-        int dur = p.getItemInHand().getDurability();
-        int maxDur = p.getItemInHand().getType().getMaxDurability();
-        int durLeft = maxDur - dur;
-
-        if (maxDur > 0) {
-            String itemname = p.getItemInHand().getType().toString();
-
-            // Debugging messages. Disabled for production.
-            // p.sendMessage("Durability of " + itemname + ": " + durLeft);
-            // p.sendMessage("Max dur of " + itemname + ": " + maxDur);
-            if (p.getItemInHand().getType() != Material.AIR && durLeft < durWarning) {
-                p.sendMessage(ChatColor.RED + "WARNING: " + ChatColor.GREEN + "Your " + itemname + " needs repairing soon!");
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("dn")) {
+            if ((sender instanceof Player) && sender.isOp()) {
+                Player p = (Player) sender;
+                if (args.length == 2 && args[0].equalsIgnoreCase("use")) {
+                    short dur = p.getItemInHand().getDurability();
+                    short maxDur = p.getItemInHand().getType().getMaxDurability();
+                    if (maxDur > 0) {
+                        try {
+                            short durUse = Short.parseShort(args[1]);
+                            short newDur = (short)(dur + durUse);
+                            if (newDur < maxDur) {
+                                p.getItemInHand().setDurability(newDur);
+                                return true;
+                            }
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    }
+                }
+                else if (args.length == 1 && args[0].equalsIgnoreCase("dur")) {
+                    String itemname = p.getItemInHand().getType().toString();
+                    short dur = p.getItemInHand().getDurability();
+                    short maxDur = p.getItemInHand().getType().getMaxDurability();
+                    short durLeft = (short)(maxDur - dur);
+                    p.sendMessage("Your " + ChatColor.GREEN + itemname + ChatColor.RESET + " has " + ChatColor.GREEN + durLeft + ChatColor.RESET + " uses left!");
+                }
             }
-        } // else, item is not a tool.
+            else // if sender != player || sender != opped.
+                sender.sendMessage(ChatColor.RED + "This command can only be used by opped players in-game.");
+        }
+        return false;
     }
 }

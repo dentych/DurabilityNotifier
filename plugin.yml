@@ -3,3 +3,7 @@ main: dk.dennist.durnotifier.Main
 version: 1.0
 author: Denz
 website: http://dennis-t.dk
+
+commands:
+    dn:
+        description: Use durability of tool.
