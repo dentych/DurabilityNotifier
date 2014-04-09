@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 /*
  * ----------------------------------------------------------------------------
@@ -40,7 +41,7 @@ public class EvtListen implements Listener {
     }
 
     @EventHandler
-    public void onEntityDmg(EntityDamageByEntityEvent evt) {
+    public void onEntityDmgByEnt(EntityDamageByEntityEvent evt) {
         if (evt.getDamager() instanceof Player) {
             Player p = (Player) evt.getDamager();
             int dur = p.getItemInHand().getDurability();
@@ -54,6 +55,13 @@ public class EvtListen implements Listener {
                     p.sendMessage(ChatColor.RED + "WARNING: " + ChatColor.RESET + "Your " + ChatColor.GREEN + itemname + ChatColor.RESET + " has " + ChatColor.GREEN + durLeft + ChatColor.RESET + " uses left!");
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onEntityDmg(EntityDamageEvent evt) {
+        if (evt.getEntity() instanceof Player) {
+            Player p = (Player) evt.getEntity();
         }
     }
 }
